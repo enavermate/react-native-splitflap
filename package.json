@@ -1,6 +1,6 @@
 {
   "name": "@enavermate/react-native-splitflap",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Split-flap departure-board text for React Native and Expo: every letter rolls, flips or flickers into place, played natively",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",

@@ -1,8 +1,8 @@
 # Changelog
 
-## [0.5.1](https://github.com/enavermate/react-native-splitflap/compare/v0.5.0...v0.5.1) — 2026-10-04
+## [0.5.2](https://github.com/enavermate/react-native-splitflap/compare/v0.5.0...v0.5.2) — 2026-10-04
 
-- Maintenance only: nothing a consumer of the package sees changed.
+- Maintenance only: nothing a consumer of the package sees changed
 
 ## [0.5.0] — 2026-10-04
 

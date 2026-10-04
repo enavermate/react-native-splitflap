@@ -21,6 +21,7 @@
   ],
   "rules": [
     "Install and import the scoped package @enavermate/react-native-splitflap; the unscoped name react-native-splitflap is not this package",
+    "Import only what the package root exports: Splitflap, isSplitflapNativeAvailable, createBoard, planTransition, loadingPlan, the DEFAULT_* and LOADING_* constants and the types; planner/ files and the native spec are internal",
     "Requires the React Native New Architecture (Fabric), React Native 0.81+; there is no old-architecture fallback",
     "In Expo use a development build (Expo SDK 54+): the library has native code and does not run in Expo Go. No config plugin and no native project changes are needed",
     "transition=\"flip\" requires surfaceColor, the background colour right under the text; TypeScript enforces it wherever the transition can be flip",
