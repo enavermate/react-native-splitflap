@@ -1,0 +1,86 @@
+{
+  "name": "@enavermate/react-native-splitflap",
+  "version": "0.5.0",
+  "description": "Departure-board text for React Native: every letter rolls, flips or flickers into place, played natively",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src/SplitflapViewNativeComponent.ts",
+    "lib",
+    "CHANGELOG.md",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/src/test",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "!**/*.map"
+  ],
+  "keywords": [
+    "react-native",
+    "split-flap",
+    "splitflap",
+    "flip",
+    "departure-board",
+    "solari",
+    "text-animation",
+    "animated-text",
+    "counter",
+    "ticker",
+    "odometer",
+    "fabric",
+    "new-architecture",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enavermate/react-native-splitflap.git"
+  },
+  "author": "Roman Diukachov <hi@scivi.dev> (https://github.com/enavermate)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/enavermate/react-native-splitflap/issues"
+  },
+  "homepage": "https://github.com/enavermate/react-native-splitflap#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.81.0"
+  },
+  "codegenConfig": {
+    "name": "SplitflapViewSpec",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.splitflap"
+    },
+    "ios": {
+      "components": {
+        "SplitflapView": {
+          "className": "SplitflapView"
+        }
+      }
+    }
+  }
+}
