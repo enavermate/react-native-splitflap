@@ -1,0 +1,28 @@
+# Contributing
+
+Thank you for taking the time.
+
+## Bugs
+
+Open an issue with the [bug form](https://github.com/enavermate/react-native-splitflap/issues/new/choose).
+What helps the most:
+
+- the library, React Native and Expo versions
+- iOS or Android, device or simulator
+- a few lines that reproduce it: the props and the texts the board went through
+
+## Ideas and questions
+
+[Discussions](https://github.com/enavermate/react-native-splitflap/discussions) — Ideas for a
+feature, Q&A for help.
+
+## Pull requests
+
+This repository holds the package as it is published: `master` gets one commit per release. A pull
+request is read and welcome, and its change lands in the next release rather than being merged here.
+For anything larger than a fix, open an issue or a discussion first, so the change fits the
+library's direction before the work is done.
+
+## Code of conduct
+
+Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md).

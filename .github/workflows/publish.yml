@@ -1,0 +1,28 @@
+# Publishes the release a tag names to npm, from this repository, with provenance: npm checks through
+# GitHub's OIDC token that this commit built the package (trusted publishing), so no npm token is
+# stored anywhere. The tree here is the release tarball unpacked, so `npm publish` packs the same
+# files the release was checked with.
+name: Publish to npm
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+      # Trusted publishing needs npm 11.5.1 or newer.
+      - run: npm install -g npm@11
+      - name: The tag names the version package.json holds
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      - run: npm publish --access public

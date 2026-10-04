@@ -4,7 +4,7 @@
 
 # react-native-splitflap
 
-**Departure-board text for React Native — every letter rolls, flips or flickers into place, played natively**
+**Split-flap departure-board text for React Native and Expo — every letter rolls, flips or flickers into place, played natively**
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![npm](https://img.shields.io/npm/v/@enavermate/react-native-splitflap.svg?color=blue)](https://www.npmjs.com/package/@enavermate/react-native-splitflap)
@@ -13,6 +13,7 @@
 [![React Native 0.81+](https://img.shields.io/badge/React%20Native-0.81%2B-blue.svg)](#-platforms)
 [![Expo SDK 54+](https://img.shields.io/badge/Expo%20SDK-54%2B-blue.svg)](#-platforms)
 [![issues welcome](https://img.shields.io/badge/issues-welcome-brightgreen.svg)](https://github.com/enavermate/react-native-splitflap/issues)
+[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/enavermate/react-native-splitflap)
 
 </div>
 
@@ -77,6 +78,9 @@ In an Expo app, use a
 has native code, so it does not run in Expo Go. In a bare React Native app, run
 `cd ios && pod install` after installing.
 
+No config plugin, and no changes to `Info.plist`, `AndroidManifest.xml` or the `Podfile`: autolinking
+links the native code, and the development build picks it up.
+
 ## 🚀 Quick start
 
 ```tsx
@@ -132,6 +136,11 @@ Each transition starts from its best look and takes only the settings it shows w
 | `scramble`        | `tiered`            | `stable` · `tiered` · `uniform` | —           |
 | chosen at runtime | the transition's    | `stable` · `tiered` · `uniform` | —           |
 
+```tsx
+<Splitflap text={destination} transition="flip" surfaceColor="#111" cellWidth="uniform" />
+<Splitflap text={status} cellWidth="stable" />
+```
+
 `flip` and `scramble` show two glyphs in one cell at once — a flap over a half, a new letter every
 few frames — so under `natural` the cell would reflow for each: the flaps reach into the neighbours
 and the word jumps. A flip always falls and a scramble does not travel, so neither takes a
@@ -152,6 +161,10 @@ every mode.
 | `random` _(default)_ | Every other cell comes from above and the rest from below; which of the two comes from above is picked anew on each change |
 | `auto`               | Each cell rolls the way its letter lies in the alphabet                                                                    |
 | `up` / `down`        | Every cell one way                                                                                                         |
+
+```tsx
+<Splitflap text={weekday} transition="roll" direction="auto" />
+```
 
 ## ⚙️ Props
 
@@ -279,6 +292,20 @@ The board is one accessible element with role `text`; `accessibilityLabel` defau
 The players run the plans the planner returns, so the planner is enough to test what a board will
 do, or to draw a board some other way.
 
+```ts
+import {
+  createBoard,
+  planTransition,
+} from '@enavermate/react-native-splitflap';
+
+const { plan } = planTransition(createBoard(), {
+  text: 'BERLIN',
+  now: 0,
+  transition: 'flip',
+});
+plan.totalMs; // when the board settles
+```
+
 ### Types
 
 | Type                                                           | Shape                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -402,6 +429,10 @@ one never flashes ы.
 An accented letter rolls as its base letter and lands as itself (é, ş, ά, ệ). Whatever the library
 has no alphabet for changes in one step: a board never fails on an unknown script.
 
+```tsx
+<Splitflap text={code} alphabet={{ letters: '0123456789ABCDEF' }} />
+```
+
 ## 🚫 Limitations
 
 - Right-to-left scripts are not supported: Arabic letters change shape with their neighbours and
@@ -411,7 +442,8 @@ has no alphabet for changes in one step: a board never fails on an unknown scrip
 ## 🤝 Contributing
 
 Found a bug, or missing something? [Open an issue](https://github.com/enavermate/react-native-splitflap/issues/new/choose) —
-a short reproduction helps the most. Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md).
+a short reproduction helps the most. How issues, ideas and pull requests are handled is in
+[CONTRIBUTING](CONTRIBUTING.md). Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md).
 
 ## 📄 License
 

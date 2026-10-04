@@ -1,7 +1,7 @@
 {
   "name": "@enavermate/react-native-splitflap",
-  "version": "0.5.0",
-  "description": "Departure-board text for React Native: every letter rolls, flips or flickers into place, played natively",
+  "version": "0.5.1",
+  "description": "Split-flap departure-board text for React Native and Expo: every letter rolls, flips or flickers into place, played natively",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -48,7 +48,10 @@
     "fabric",
     "new-architecture",
     "ios",
-    "android"
+    "android",
+    "expo",
+    "flip-animation",
+    "react-native-component"
   ],
   "repository": {
     "type": "git",

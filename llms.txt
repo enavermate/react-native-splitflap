@@ -1,0 +1,59 @@
+# react-native-splitflap
+
+> Split-flap departure-board text for React Native and Expo: every letter rolls, flips or flickers into place, played natively (Core Animation on iOS, a frame-driven Canvas on Android). npm package `@enavermate/react-native-splitflap`. New Architecture (Fabric) only; React Native 0.81+, Expo SDK 54+ with a development build (not Expo Go). No dependencies besides `react` and `react-native`.
+
+**Install.**
+
+- Expo: `npx expo install @enavermate/react-native-splitflap`, then a development build; no config plugin and no changes to Info.plist, AndroidManifest or the Podfile
+- Bare React Native: `npm install @enavermate/react-native-splitflap`, then `cd ios && pod install`
+
+**Use.**
+
+```tsx
+import { Splitflap } from '@enavermate/react-native-splitflap';
+
+<Splitflap text={departure} style={{ fontSize: 32, fontWeight: '700' }} />
+```
+
+`text` is the only required prop; a new `text` animates in from the one on screen, and a change mid-flight continues from where every cell is.
+
+**Props.**
+
+- `text: string` — required; split into cells as a reader sees characters (flags, ZWJ emoji, keycaps, combining accents, Indic and Thai syllables take one cell each); one line, ends in `…` when too wide
+- `transition?: 'flip' | 'reel' | 'roll' | 'scramble'` — default `'reel'`. `flip` turns halves like a board's flaps; `reel` spins through the alphabet; `roll` rolls through a few letters; `scramble` flickers random letters, then locks
+- `surfaceColor?: ColorValue` — the background colour right under the text; required by the types wherever the transition can be `flip`
+- `cellWidth?: 'natural' | 'stable' | 'tiered' | 'uniform'` — default `natural` for `reel`/`roll`, `tiered` for `flip`/`scramble`; `flip`, `scramble` and a transition chosen at run time do not accept `natural`
+- `direction?: 'random' | 'auto' | 'up' | 'down'` — `reel` and `roll` only; default `'random'`
+- `duration?: number` — ms per cell, default 650 (`flip` takes 1.6×)
+- `stagger?: number` — ms between consecutive changed cells, default 40
+- `staggerOrder?: 'ltr' | 'rtl' | 'random'` — default `'ltr'`
+- `alphabet?: 'auto' | SplitflapScript | { letters: string }` — default `'auto'` (each letter's own script)
+- `loading?: boolean` — loops random words of the text's script until `false`; numbers load as digits, capitals as capitals
+- `loadingLength?: number | { min: number; max: number }` — the loading words' length in cells
+- `animateOnMount?: boolean` — default `true`; `false` shows the first text at once (recycled list rows)
+- `contentKey?: string | number` — replans even when `text` did not change
+- `reduceMotion?: 'system' | 'always' | 'never'` — default `'system'`
+- `seed?: number` — makes random choices reproducible, default 1
+- `onTransitionStart?: ({ text }) => void`, `onTransitionEnd?: ({ text, interrupted }) => void`
+- `style?: TextStyle` — font family, size, weight, colour, letter spacing, line height as on `<Text>`; digits are tabular by default
+- Every `View` prop passes through; `accessibilityLabel` defaults to `text`
+
+**Recipes.**
+
+- Counter that never jumps sideways: `<Splitflap text={String(count)} transition="roll" />`
+- Station board: `<Splitflap text={destination.toUpperCase()} transition="flip" surfaceColor="#111" cellWidth="uniform" />`
+- List row, still until it changes: `<Splitflap text={item.status} contentKey={item.id} animateOnMount={false} />`
+- Waiting for data: `<Splitflap text={price ?? ''} loading={price === undefined} loadingLength={4} />`
+
+**Scripts.**
+
+Latin, Cyrillic, Greek, Armenian, Georgian, the Indic and Southeast Asian scripts, hiragana, katakana and many numeral systems roll through their own alphabets; any other character (CJK, Hangul, symbols) changes in one step. Right-to-left scripts are not supported. On the web the board renders a plain `<Text>`.
+
+## Docs
+
+- [README](https://raw.githubusercontent.com/enavermate/react-native-splitflap/master/README.md): full API reference, recipes, platforms and tested versions
+- [Changelog](https://raw.githubusercontent.com/enavermate/react-native-splitflap/master/CHANGELOG.md): release history
+
+## Optional
+
+- [npm package](https://www.npmjs.com/package/@enavermate/react-native-splitflap): registry page and versions

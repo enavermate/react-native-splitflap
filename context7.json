@@ -1,0 +1,31 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "react-native-splitflap",
+  "description": "Split-flap departure-board text for React Native: every letter rolls, flips or flickers into place, played natively (Core Animation on iOS, Canvas on Android)",
+  "excludeFolders": [
+    "android",
+    "ios",
+    "cpp",
+    "lib",
+    "src",
+    ".github",
+    ".devin"
+  ],
+  "excludeFiles": [
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "LICENSE.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CMakeLists.txt"
+  ],
+  "rules": [
+    "Install and import the scoped package @enavermate/react-native-splitflap; the unscoped name react-native-splitflap is not this package",
+    "Requires the React Native New Architecture (Fabric), React Native 0.81+; there is no old-architecture fallback",
+    "In Expo use a development build (Expo SDK 54+): the library has native code and does not run in Expo Go. No config plugin and no native project changes are needed",
+    "transition=\"flip\" requires surfaceColor, the background colour right under the text; TypeScript enforces it wherever the transition can be flip",
+    "flip and scramble do not accept cellWidth=\"natural\"; direction applies to reel and roll only",
+    "The only peers are react and react-native; do not add Reanimated, Skia or any animation library for it",
+    "On the web the component renders a plain <Text>; right-to-left scripts are not supported"
+  ]
+}

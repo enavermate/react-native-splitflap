@@ -1,0 +1,51 @@
+{
+  "repo_notes": [
+    {
+      "content": "React Native library @enavermate/react-native-splitflap (repository name react-native-splitflap). New Architecture (Fabric) only. A pure TypeScript planner computes each cell's path and timing; two native players replay the plan: iOS with Core Animation (ios/), Android with a frame-driven Canvas (android/), shared Fabric shadow node in cpp/. The codegen spec is src/SplitflapViewNativeComponent.ts. lib/ is compiled build output (lib/module JS, lib/typescript .d.ts): document the API from README.md and the .d.ts types, never describe lib/module as source. There is no example app in this repository; master receives one commit per release. README.md is the authoritative API reference."
+    }
+  ],
+  "pages": [
+    {
+      "title": "Overview and installation",
+      "purpose": "What the component does, install with Expo (development build, no config plugin) and bare React Native, platform and version requirements"
+    },
+    {
+      "title": "Component API",
+      "purpose": "Every <Splitflap> prop, its default, events and accessibility",
+      "parent": "Overview and installation"
+    },
+    {
+      "title": "Transitions",
+      "purpose": "flip, reel, roll and scramble; why flip needs surfaceColor; duration, stagger and staggerOrder",
+      "parent": "Component API"
+    },
+    {
+      "title": "Cell width and direction",
+      "purpose": "natural, stable, tiered and uniform cells, tabular digits, which transitions accept which modes, direction for reel and roll",
+      "parent": "Component API"
+    },
+    {
+      "title": "Scripts and alphabets",
+      "purpose": "Per-script alphabets, grapheme cells (emoji, flags, Indic syllables), custom alphabets, what changes in one step, the right-to-left limitation",
+      "parent": "Component API"
+    },
+    {
+      "title": "Planner",
+      "purpose": "createBoard, planTransition and loadingPlan; Plan and CellPlan shapes; retargeting mid-flight; testing a board without rendering"
+    },
+    {
+      "title": "iOS player",
+      "purpose": "How the Core Animation renderer replays a plan: glyph atlas, four layers per cell, drum masks, flip flaps",
+      "parent": "Planner"
+    },
+    {
+      "title": "Android player",
+      "purpose": "How the Canvas renderer replays a plan frame by frame",
+      "parent": "Planner"
+    },
+    {
+      "title": "Fabric and codegen bridge",
+      "purpose": "codegenConfig, the native component spec, the shared C++ shadow node and how measurement matches <Text>"
+    }
+  ]
+}
