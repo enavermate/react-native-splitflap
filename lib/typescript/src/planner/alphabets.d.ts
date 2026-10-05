@@ -33,9 +33,10 @@ export declare function withCase(letter: string, ref: string): string;
  */
 export declare function scrambleLetters(target: string, scripts: Scripts): string;
 /**
- * `cellWidth: 'uniform'` and `'tiered'`: the glyphs a board's cell widths are measured over —
- * every glyph of `text` and the letters each of them travels through, in its case. `uniform`
- * takes the widest of them for every cell; `tiered` sorts them into narrow, regular and wide.
+ * `cellWidth: 'uniform'`, and the default width of `flip` and `scramble`: the glyphs a board's cell
+ * widths are measured over — every glyph of `text` and the letters each of them travels through, in
+ * its case. `uniform` takes the widest of them for every cell; the `flip` and `scramble` default
+ * sorts them into narrow, regular and wide.
  */
 export declare function widthGlyphs(text: string): string;
 //# sourceMappingURL=alphabets.d.ts.map

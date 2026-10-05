@@ -22,7 +22,7 @@ import { Splitflap } from '@enavermate/react-native-splitflap';
 - `text: string` — required; split into cells as a reader sees characters (flags, ZWJ emoji, keycaps, combining accents, Indic and Thai syllables take one cell each); one line, ends in `…` when too wide
 - `transition?: 'flip' | 'reel' | 'roll' | 'scramble'` — default `'reel'`. `flip` turns halves like a board's flaps; `reel` spins through the alphabet; `roll` rolls through a few letters; `scramble` flickers random letters, then locks
 - `surfaceColor?: ColorValue` — the background colour right under the text; required by the types wherever the transition can be `flip`
-- `cellWidth?: 'natural' | 'stable' | 'tiered' | 'uniform'` — default `natural` for `reel`/`roll`, `tiered` for `flip`/`scramble`; `flip`, `scramble` and a transition chosen at run time do not accept `natural`
+- `cellWidth?: 'natural' | 'uniform'` — without it `reel`/`roll` are `natural` and `flip`/`scramble` keep each letter near its own width; `flip`, `scramble` and a transition chosen at run time do not accept `natural`
 - `direction?: 'random' | 'auto' | 'up' | 'down'` — `reel` and `roll` only; default `'random'`
 - `duration?: number` — ms per cell, default 650 (`flip` takes 1.6×)
 - `stagger?: number` — ms between consecutive changed cells, default 40

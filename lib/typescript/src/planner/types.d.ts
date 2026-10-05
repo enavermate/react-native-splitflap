@@ -12,8 +12,7 @@ export type SplitflapTransition = 'flip' | 'reel' | 'roll' | 'scramble';
 /**
  * 'out' = cubic out, 'inOut' = cubic in-out, 'linear' = identity.
  * 'linear' exists for the two cases where a curve would show: a flip card that turns at
- * constant speed (the approved prototype), and a looping loading plan that must not pulse at
- * each cycle boundary.
+ * constant speed, and a looping loading plan that must not pulse at each cycle boundary.
  */
 export type Easing = 'out' | 'inOut' | 'linear';
 export type Plan = {

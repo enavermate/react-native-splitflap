@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.3](https://github.com/enavermate/react-native-splitflap/compare/v0.5.2...v0.5.3) — 2026-10-05
+
+### ⚠️ Breaking
+
+- cellWidth is natural or uniform
+
 ## [0.5.2](https://github.com/enavermate/react-native-splitflap/compare/v0.5.0...v0.5.2) — 2026-10-04
 
 - Maintenance only: nothing a consumer of the package sees changed

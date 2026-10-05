@@ -1,0 +1,4 @@
+# This repository holds the published package; nothing is built here.
+.DS_Store
+node_modules/
+*.tgz

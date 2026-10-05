@@ -21,7 +21,7 @@
     },
     {
       "title": "Cell width and direction",
-      "purpose": "natural, stable, tiered and uniform cells, tabular digits, which transitions accept which modes, direction for reel and roll",
+      "purpose": "natural and uniform cells, tabular digits, which transitions accept which modes, direction for reel and roll",
       "parent": "Component API"
     },
     {

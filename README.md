@@ -17,7 +17,7 @@
 
 </div>
 
-<p align="center"><img src=".github/assets/showcase-overview.gif" width="400" alt="Four transitions, one board through ten scripts, numbers that hold still, and a departure board" /></p>
+<p align="center"><img src=".github/assets/hero.svg" width="880" alt="A departures board with cities in their own scripts, the four transitions, numbers, emoji, cell widths and all four directions, all moving at once" /><br /><sub>Emoji: <a href="https://github.com/jdecked/twemoji">Twemoji</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a></sub></p>
 
 ---
 
@@ -28,8 +28,8 @@
   Southeast Asian scripts, the kana and many numeral systems roll through their own alphabets; any
   other character still changes, in one step. Flags, emoji and Indic syllables stay whole in one
   cell. See [Scripts](#-scripts)
-- 📏 **Cells that keep still** — tabular digits by default, and four cell-width modes, from text-like
-  reflow to a station board's fixed cells
+- 📏 **Cells that keep still** — tabular digits by default, and two cell widths: text-like `natural`
+  and `uniform`, a station board's fixed cells
 - ⚡ **Native players** — Core Animation on iOS, a frame-driven Canvas on Android. JavaScript plans
   a transition once; it never runs per frame
 - 🔁 **Interruptible** — a new text mid-flight continues from where every cell is, without a jump
@@ -118,34 +118,34 @@ transition chosen at run time.
 
 ## 📏 Cell width
 
-<p align="center"><img src=".github/assets/showcase-cell-width.gif" width="360" alt="The same words in natural, stable, tiered and uniform cells" /></p>
+<p align="center"><img src=".github/assets/showcase-cell-width.gif" width="360" alt="The same words in natural and uniform cells" /></p>
 
-| `cellWidth` | Behaviour                                                                                                                                           |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `natural`   | A cell moves from the old glyph's width to the new one's, as a `<Text>` reflows. `reel` and `roll` only                                             |
-| `stable`    | A cell takes the widest glyph on its way at once, holds it while turning, then narrows                                                              |
-| `tiered`    | Narrow, regular and wide cells, measured from the text's alphabets. A word reads almost as dense as text and moves only where a letter changes tier |
-| `uniform`   | Every cell as wide as the alphabet's widest letter, each glyph centred — a station board. A word never moves sideways                               |
+| `cellWidth` | Behaviour                                                                                                             |
+| ----------- | --------------------------------------------------------------------------------------------------------------------- |
+| `natural`   | A cell moves from the old glyph's width to the new one's, as a `<Text>` reflows. `reel` and `roll` only               |
+| `uniform`   | Every cell as wide as the alphabet's widest letter, each glyph centred — a station board. A word never moves sideways |
 
 Each transition starts from its best look and takes only the settings it shows well:
 
-| `transition`      | Default `cellWidth` | `cellWidth` accepted            | `direction` |
-| ----------------- | ------------------- | ------------------------------- | ----------- |
-| `reel`, `roll`    | `natural`           | all four                        | ✅          |
-| `flip`            | `tiered`            | `stable` · `tiered` · `uniform` | —           |
-| `scramble`        | `tiered`            | `stable` · `tiered` · `uniform` | —           |
-| chosen at runtime | the transition's    | `stable` · `tiered` · `uniform` | —           |
+| `transition`      | Without `cellWidth`            | `cellWidth` accepted  | `direction` |
+| ----------------- | ------------------------------ | --------------------- | ----------- |
+| `reel`, `roll`    | `natural`                      | `natural` · `uniform` | ✅          |
+| `flip`            | each letter near its own width | `uniform`             | —           |
+| `scramble`        | each letter near its own width | `uniform`             | —           |
+| chosen at runtime | the transition's               | `uniform`             | —           |
 
 ```tsx
 <Splitflap text={destination} transition="flip" surfaceColor="#111" cellWidth="uniform" />
-<Splitflap text={status} cellWidth="stable" />
+<Splitflap text={status} />
 ```
 
 `flip` and `scramble` show two glyphs in one cell at once — a flap over a half, a new letter every
 few frames — so under `natural` the cell would reflow for each: the flaps reach into the neighbours
-and the word jumps. A flip always falls and a scramble does not travel, so neither takes a
-`direction`. TypeScript refuses those combinations; in plain JavaScript `natural` falls back to
-`tiered`.
+and the word jumps. Without a `cellWidth` they keep every letter near its own width instead: the
+text's alphabets measured and sorted into narrow, regular and wide cells. A flip always falls and a
+scramble does not travel, so neither takes a `direction`. TypeScript refuses those combinations; in
+plain JavaScript `natural` falls back to the default. `stable` and `tiered`, the widths before 0.6,
+are taken as the default too, so an app that still passes them keeps working.
 
 Digits are tabular by default (`fontVariant: ['tabular-nums']`), so numbers keep their width in
 every mode.
@@ -168,26 +168,26 @@ every mode.
 
 ## ⚙️ Props
 
-| Prop                | Type                                             | Default        |                                                                                                                                                                                                                                          |
-| ------------------- | ------------------------------------------------ | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `text`              | `string`                                         | —              | **Required.** What the board shows                                                                                                                                                                                                       |
-| `transition`        | `'flip' \| 'reel' \| 'roll' \| 'scramble'`       | `'reel'`       | See [Transitions](#️-transitions)                                                                                                                                                                                                         |
-| `surfaceColor`      | `ColorValue`                                     | —              | The background colour under the text. Required wherever `transition` can be `flip`                                                                                                                                                       |
-| `cellWidth`         | `'natural' \| 'stable' \| 'tiered' \| 'uniform'` | per transition | See [Cell width](#-cell-width)                                                                                                                                                                                                           |
-| `direction`         | `'random' \| 'auto' \| 'up' \| 'down'`           | `'random'`     | See [Direction](#-direction)                                                                                                                                                                                                             |
-| `duration`          | `number`                                         | `650`          | Milliseconds per cell; `flip` takes 1.6×                                                                                                                                                                                                 |
-| `stagger`           | `number`                                         | `40`           | Milliseconds between consecutive changed cells                                                                                                                                                                                           |
-| `staggerOrder`      | `'ltr' \| 'rtl' \| 'random'`                     | `'ltr'`        | The order the cells start in                                                                                                                                                                                                             |
-| `alphabet`          | `'auto' \| script name \| { letters }`           | `'auto'`       | The letters a cell travels through: `auto` takes each letter's script from the text; a script name (`'latin'`, `'cyrillic'`, `'devanagari'`…) also sets the loading words' script; `{ letters }` sets your own. See [Scripts](#-scripts) |
-| `animateOnMount`    | `boolean`                                        | `true`         | `false` shows the first text — and the first after `contentKey` changes — at once                                                                                                                                                        |
-| `contentKey`        | `string \| number`                               | —              | Replans even if `text` did not change: a recycled list row showing a new item                                                                                                                                                            |
-| `loading`           | `boolean`                                        | `false`        | Loops random words of the text's script until it turns `false`                                                                                                                                                                           |
-| `loadingLength`     | `number \| { min, max }`                         | —              | The loading words' length, in cells: a number for exactly that many (a count of known width), `{ min, max }` for lengths drawn from the range the real text may come in. Without it the words wander ±1 around the text's length         |
-| `reduceMotion`      | `'system' \| 'always' \| 'never'`                | `'system'`     | `system` follows the device's Reduce Motion setting                                                                                                                                                                                      |
-| `seed`              | `number`                                         | `1`            | Makes the random choices reproducible                                                                                                                                                                                                    |
-| `onTransitionStart` | `({ text }) => void`                             | —              | A transition began to play                                                                                                                                                                                                               |
-| `onTransitionEnd`   | `({ text, interrupted }) => void`                | —              | The board settled, or a newer text interrupted it                                                                                                                                                                                        |
-| `style`             | `TextStyle`                                      | —              | Font family, size, weight, style, variant, colour, letter spacing, line height — as on `<Text>`                                                                                                                                          |
+| Prop                | Type                                       | Default        |                                                                                                                                                                                                                                          |
+| ------------------- | ------------------------------------------ | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text`              | `string`                                   | —              | **Required.** What the board shows                                                                                                                                                                                                       |
+| `transition`        | `'flip' \| 'reel' \| 'roll' \| 'scramble'` | `'reel'`       | See [Transitions](#️-transitions)                                                                                                                                                                                                         |
+| `surfaceColor`      | `ColorValue`                               | —              | The background colour under the text. Required wherever `transition` can be `flip`                                                                                                                                                       |
+| `cellWidth`         | `'natural' \| 'uniform'`                   | per transition | See [Cell width](#-cell-width)                                                                                                                                                                                                           |
+| `direction`         | `'random' \| 'auto' \| 'up' \| 'down'`     | `'random'`     | See [Direction](#-direction)                                                                                                                                                                                                             |
+| `duration`          | `number`                                   | `650`          | Milliseconds per cell; `flip` takes 1.6×                                                                                                                                                                                                 |
+| `stagger`           | `number`                                   | `40`           | Milliseconds between consecutive changed cells                                                                                                                                                                                           |
+| `staggerOrder`      | `'ltr' \| 'rtl' \| 'random'`               | `'ltr'`        | The order the cells start in                                                                                                                                                                                                             |
+| `alphabet`          | `'auto' \| script name \| { letters }`     | `'auto'`       | The letters a cell travels through: `auto` takes each letter's script from the text; a script name (`'latin'`, `'cyrillic'`, `'devanagari'`…) also sets the loading words' script; `{ letters }` sets your own. See [Scripts](#-scripts) |
+| `animateOnMount`    | `boolean`                                  | `true`         | `false` shows the first text — and the first after `contentKey` changes — at once                                                                                                                                                        |
+| `contentKey`        | `string \| number`                         | —              | Replans even if `text` did not change: a recycled list row showing a new item                                                                                                                                                            |
+| `loading`           | `boolean`                                  | `false`        | Loops random words of the text's script until it turns `false`                                                                                                                                                                           |
+| `loadingLength`     | `number \| { min, max }`                   | —              | The loading words' length, in cells: a number for exactly that many (a count of known width), `{ min, max }` for lengths drawn from the range the real text may come in. Without it the words wander ±1 around the text's length         |
+| `reduceMotion`      | `'system' \| 'always' \| 'never'`          | `'system'`     | `system` follows the device's Reduce Motion setting                                                                                                                                                                                      |
+| `seed`              | `number`                                   | `1`            | Makes the random choices reproducible                                                                                                                                                                                                    |
+| `onTransitionStart` | `({ text }) => void`                       | —              | A transition began to play                                                                                                                                                                                                               |
+| `onTransitionEnd`   | `({ text, interrupted }) => void`          | —              | The board settled, or a newer text interrupted it                                                                                                                                                                                        |
+| `style`             | `TextStyle`                                | —              | Font family, size, weight, style, variant, colour, letter spacing, line height — as on `<Text>`                                                                                                                                          |
 
 Every `View` prop passes through. `accessibilityLabel` defaults to `text`.
 
@@ -209,10 +209,10 @@ moves; see [Transitions](#️-transitions). A cell whose glyph did not change do
 so it is required by the types wherever the transition can be `flip` (a literal `'flip'`, or a
 `SplitflapTransition` chosen at run time). Other transitions ignore it.
 
-**`cellWidth?: 'natural' | 'stable' | 'tiered' | 'uniform'`** — how wide each cell is, see
-[Cell width](#-cell-width). Default per transition: `natural` for `reel` and `roll`, `tiered` for
-`flip` and `scramble`. `flip`, `scramble` and a transition chosen at run time do not accept
-`natural` (TypeScript refuses it; in plain JavaScript it falls back to `tiered`).
+**`cellWidth?: 'natural' | 'uniform'`** — how wide each cell is, see
+[Cell width](#-cell-width). Without it, `reel` and `roll` are `natural`, and `flip` and `scramble`
+keep each letter near its own width. `flip`, `scramble` and a transition chosen at run time do not
+accept `natural` (TypeScript refuses it; in plain JavaScript it falls back to the default).
 
 **`direction?: 'random' | 'auto' | 'up' | 'down'`** — `reel` and `roll` only; default `'random'`.
 `random`: every other cell comes from above and the rest from below, which half is picked anew on
@@ -312,7 +312,7 @@ plan.totalMs; // when the board settles
 | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `SplitflapProps`                                               | The props above                                                                                                                                                                                                                                                                                                                                                                                            |
 | `SplitflapTransition`                                          | `'flip' \| 'reel' \| 'roll' \| 'scramble'`                                                                                                                                                                                                                                                                                                                                                                 |
-| `SplitflapCellWidth`, `SplitflapSteadyCellWidth`               | `'natural' \| 'stable' \| 'tiered' \| 'uniform'`; the steady ones without `'natural'`                                                                                                                                                                                                                                                                                                                      |
+| `SplitflapCellWidth`, `SplitflapSteadyCellWidth`               | `'natural' \| 'uniform'`; the steady one without `'natural'`                                                                                                                                                                                                                                                                                                                                               |
 | `Direction`, `StaggerOrder`                                    | `'random' \| 'auto' \| 'up' \| 'down'`; `'ltr' \| 'rtl' \| 'random'`                                                                                                                                                                                                                                                                                                                                       |
 | `SplitflapScript`, `AlphabetOption`                            | The script names listed under `alphabet`; `'auto' \| SplitflapScript \| { letters: string }`                                                                                                                                                                                                                                                                                                               |
 | `LoadingLength`                                                | `number \| { min: number; max: number }`                                                                                                                                                                                                                                                                                                                                                                   |
@@ -438,6 +438,12 @@ has no alphabet for changes in one step: a board never fails on an unknown scrip
 - Right-to-left scripts are not supported: Arabic letters change shape with their neighbours and
   cannot be split into cells, and Hebrew would read in the wrong order
 - No web renderer yet
+
+## 🍎 Also for Swift
+
+The same board for native apps: [SplitflapKit](https://github.com/enavermate/SplitflapKit), a Swift
+package for SwiftUI and UIKit on iPhone, iPad and the Mac (Mac Catalyst). Its planner is a line-by-line port of this
+one, checked against the same plans, so a text animates the same way in both.
 
 ## 🤝 Contributing
 

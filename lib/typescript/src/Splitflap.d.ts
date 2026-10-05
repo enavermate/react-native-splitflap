@@ -8,25 +8,18 @@ export type SplitflapTransitionEndEvent = {
     interrupted: boolean;
 };
 /**
- * How a cell's width behaves while it animates. `natural`: it moves from the old glyph's width to
- * the new one's, as a `<Text>` would reflow; with the default tabular digits a number keeps its
- * width anyway. `stable`: it takes the widest glyph on the cell's way at once, holds it while the
- * glyphs turn, and narrows to the new glyph once they have landed — as a physical board's fixed
- * cells do — so glyphs neither slide sideways nor reach into a neighbour. `uniform`: every cell of
- * the board is as wide as the widest letter of the alphabets the text is written in, in its case,
- * and each glyph sits centred in its cell — a station board's look. Words of the same alphabets
- * and case never move sideways. `tiered`: three widths instead of one — the alphabets' letters
- * measured and sorted into narrow, regular and wide («i l t» · «a o n» · «m w» in Latin, «ж ш щ»
- * wide in Cyrillic) — each glyph centred in its tier's width, so a word reads almost as dense as
- * text and moves only where a letter changes tier.
+ * How wide each cell is. `natural`: a cell moves from the old glyph's width to the new one's, as a
+ * `<Text>` would reflow — `reel` and `roll` only; with the default tabular digits a number keeps
+ * its width anyway. `uniform`: every cell of the board is as wide as the widest letter of the
+ * alphabets the text is written in, in its case, each glyph centred — a station board's look, where
+ * words of the same alphabets and case never move sideways.
+ *
+ * Without one, `reel` and `roll` are `natural`, and `flip` and `scramble` keep each letter near its
+ * own width — the alphabets' letters measured and sorted into narrow, regular and wide cells — since
+ * they show two glyphs in one cell at once and must not reflow.
  */
-export type SplitflapCellWidth = 'natural' | 'stable' | 'tiered' | 'uniform';
-/**
- * The widths that hold still while a glyph turns. `flip` and `scramble` show two different glyphs
- * in one cell at once (a flap over a half, a letter every few frames); under `natural` the cell
- * reflows for each of them, so a flip's halves reach into the neighbours and a scramble's word
- * shrinks and jumps mid-turn. Those two take only these.
- */
+export type SplitflapCellWidth = 'natural' | 'uniform';
+/** What `flip` and `scramble` accept: they show two glyphs in one cell at once and never reflow. */
 export type SplitflapSteadyCellWidth = Exclude<SplitflapCellWidth, 'natural'>;
 /**
  * `surfaceColor` is required wherever the transition can be `flip`. A flip turns each letter's
@@ -47,14 +40,14 @@ type TransitionProps = {
 } | {
     transition: 'scramble';
     surfaceColor?: ColorValue;
-    /** `tiered` by default. */
+    /** Each letter near its own width by default. */
     cellWidth?: SplitflapSteadyCellWidth;
     direction?: never;
 } | {
     transition: SplitflapTransition;
     /** The background colour right under the text; `flip` paints its flaps with it. */
     surfaceColor: ColorValue;
-    /** `tiered` for flip and scramble, `natural` for reel and roll. */
+    /** `natural` for reel and roll; each letter near its own width for flip and scramble. */
     cellWidth?: SplitflapSteadyCellWidth;
     direction?: never;
 };
